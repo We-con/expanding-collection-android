@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,6 +37,8 @@ public class ECPagerView extends FrameLayout implements ViewPager.OnPageChangeLi
     private Integer cardWidth;
     private Integer cardHeight;
     private Integer cardHeaderExpandedHeight;
+
+    private String TAG = "ECPagerView";
 
     public ECPagerView(Context context) {
         super(context);

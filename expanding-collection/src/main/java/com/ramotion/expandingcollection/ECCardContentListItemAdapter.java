@@ -16,7 +16,7 @@ import java.util.List;
  * @param <T> Type of items in card content list
  */
 public abstract class ECCardContentListItemAdapter<T> extends ArrayAdapter<T> {
-    private boolean zeroItemsMode = true;
+    private boolean zeroItemsMode = false;
 
     public ECCardContentListItemAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<T> objects) {
         super(context, resource, objects);

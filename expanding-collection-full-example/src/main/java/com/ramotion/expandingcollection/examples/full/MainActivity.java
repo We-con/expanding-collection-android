@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -26,6 +27,7 @@ import com.ramotion.expandingcollection.examples.full.view.ItemsCountView;
 public class MainActivity extends Activity {
 
     private ECPagerView ecPagerView;
+    private boolean swipeOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         // Create adapter for pager
-        ECPagerViewAdapter adapter = new ECPagerViewAdapter(this, new ExampleDataset().getDataset()) {
+        final ECPagerViewAdapter adapter = new ECPagerViewAdapter(this, new ExampleDataset().getDataset()) {
             @Override
             public void instantiateCard(LayoutInflater inflaterService, ViewGroup head, ListView list, final ECCardData data) {
                 final CardData cardData = (CardData) data;
@@ -85,6 +87,13 @@ public class MainActivity extends Activity {
 
         ecPagerView = (ECPagerView) findViewById(R.id.ec_pager_element);
 
+        ((Button)findViewById(R.id.btn_swipe)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                swipeOn = !swipeOn;
+                adapter.setExpandingSwipe(swipeOn);
+            }
+        });
         ecPagerView.setPagerViewAdapter(adapter);
         ecPagerView.setBackgroundSwitcherView((ECBackgroundSwitcherView) findViewById(R.id.ec_bg_switcher_element));
 

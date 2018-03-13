@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
@@ -15,6 +16,8 @@ public class ECPagerCard extends FrameLayout {
     private ECPagerCardContentList ecPagerCardContentList;
     private boolean animationInProgress;
     private boolean cardExpanded;
+
+    private String TAG = "ECPagerCard";
 
     public ECPagerCard(Context context) {
         super(context);
@@ -61,7 +64,8 @@ public class ECPagerCard extends FrameLayout {
             @Override
             public void onAnimationEnd(Animator animation) {
                 animationInProgress = false;
-//                ecPagerCardContentList.enableScroll();
+                ecPagerCardContentList.enableScroll();
+                if (((ECPagerViewAdapter) pager.getAdapter()).getExpandingSwipe())pager.enablePaging();
                 cardExpanded = true;
             }
         };
@@ -95,7 +99,7 @@ public class ECPagerCard extends FrameLayout {
         pager.disablePaging();
 
         ecPagerCardContentList.scrollToTop();
-//        ecPagerCardListContent.disableScroll();
+        ecPagerCardContentList.disableScroll();
 
         AnimatorListenerAdapter onAnimationEnd = new AnimatorListenerAdapter() {
             @Override
@@ -112,10 +116,10 @@ public class ECPagerCard extends FrameLayout {
         int pushNeighboursDuration = 200;
 
         pagerView.toggleTopMargin(cardAnimDuration, 0);
+
         pager.animateHeight(pagerView.getCardHeight(), cardAnimDuration, 0, null);
         ecPagerCardContentList.animateWidth(pagerView.getCardWidth(), cardAnimDuration, 0);
         ecPagerCardContentList.getHeadView().animateHeight(pagerView.getCardHeight(), cardAnimDuration, 0);
-
         pager.animateWidth(pagerView.getCardWidth(), pushNeighboursDuration, pushNeighboursDelay, onAnimationEnd);
         return true;
     }
@@ -133,5 +137,13 @@ public class ECPagerCard extends FrameLayout {
 
     public ECPagerCardContentList getEcPagerCardContentList() {
         return ecPagerCardContentList;
+    }
+
+    public boolean getCardExpanded() {
+        return cardExpanded;
+    }
+
+    public void setCardExpanded(boolean expanded) {
+        cardExpanded = expanded;
     }
 }

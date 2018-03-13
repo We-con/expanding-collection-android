@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ public abstract class ECPagerViewAdapter extends PagerAdapter {
     private ECPagerCard activeCard;
     private List<ECCardData> dataset;
     private LayoutInflater inflaterService;
+    private boolean cardExpandingStatus = false;
+    private boolean expandingSwipeOn = false;
 
     public ECPagerViewAdapter(Context applicationContext, List<ECCardData> dataset) {
         this.inflaterService = (LayoutInflater) applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -64,6 +67,7 @@ public abstract class ECPagerViewAdapter extends PagerAdapter {
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
         super.setPrimaryItem(container, position, object);
         activeCard = (ECPagerCard) object;
+        if (expandingSwipeOn) activeCard.setCardExpanded(cardExpandingStatus);
     }
 
     public ECPagerCard getActiveCard() {
@@ -82,5 +86,17 @@ public abstract class ECPagerViewAdapter extends PagerAdapter {
 
     public List<ECCardData> getDataset() {
         return dataset;
+    }
+
+    public void setCardStatus(boolean cardExpandingStatus) {
+        this.cardExpandingStatus = cardExpandingStatus;
+    }
+
+    public boolean getExpandingSwipe() {
+        return expandingSwipeOn;
+    }
+
+    public void setExpandingSwipe(boolean enable) {
+        expandingSwipeOn = enable;
     }
 }
