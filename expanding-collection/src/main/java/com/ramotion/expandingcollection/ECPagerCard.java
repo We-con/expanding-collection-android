@@ -48,6 +48,8 @@ public class ECPagerCard extends FrameLayout {
      * @return true if animation started
      */
     public boolean expand() {
+        Log.d(TAG, "expand() : " + cardExpanded);
+
         if (animationInProgress || cardExpanded) return false;
         animationInProgress = true;
 
@@ -67,6 +69,7 @@ public class ECPagerCard extends FrameLayout {
                 ecPagerCardContentList.enableScroll();
                 if (((ECPagerViewAdapter) pager.getAdapter()).getExpandingSwipe())pager.enablePaging();
                 cardExpanded = true;
+                ((ECPagerViewAdapter) pager.getAdapter()).setCardStatus(true);
             }
         };
 
@@ -90,6 +93,7 @@ public class ECPagerCard extends FrameLayout {
      * @return true if animation started
      */
     public boolean collapse() {
+        Log.d(TAG, "collapse() : " + cardExpanded);
         if (animationInProgress || !cardExpanded) return false;
         animationInProgress = true;
 
@@ -106,6 +110,7 @@ public class ECPagerCard extends FrameLayout {
             public void onAnimationEnd(Animator animation) {
                 animationInProgress = false;
                 pager.enablePaging();
+                ((ECPagerViewAdapter) pager.getAdapter()).setCardStatus(false);
                 cardExpanded = false;
                 ecPagerCardContentList.hideListElements();
             }

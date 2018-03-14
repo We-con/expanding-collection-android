@@ -144,7 +144,6 @@ public class ECPager extends ViewPager {
      */
     public boolean toggle() {
         ECPagerViewAdapter adapter = (ECPagerViewAdapter) getAdapter();
-        adapter.setCardStatus(!adapter.getActiveCard().getCardExpanded());
         return adapter.getActiveCard().toggle();
     }
 

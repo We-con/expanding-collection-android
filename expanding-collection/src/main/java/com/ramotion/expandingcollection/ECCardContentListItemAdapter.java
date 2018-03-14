@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -17,6 +18,7 @@ import java.util.List;
  */
 public abstract class ECCardContentListItemAdapter<T> extends ArrayAdapter<T> {
     private boolean zeroItemsMode = false;
+    private String TAG = "ECCardContentListItemAdapter";
 
     public ECCardContentListItemAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<T> objects) {
         super(context, resource, objects);
@@ -24,6 +26,8 @@ public abstract class ECCardContentListItemAdapter<T> extends ArrayAdapter<T> {
 
     @Override
     public final int getCount() {
+        Log.d(TAG, "getCount() : " + zeroItemsMode);
+
         return zeroItemsMode ? 0 : super.getCount();
     }
 
